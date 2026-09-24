@@ -232,6 +232,100 @@ details.case[open] summary{margin-bottom:16px;}
 .rotation span{border-left:2px solid var(--accent); padding-left:8px;}
 @media(max-width:700px){.sound-wrap{grid-template-columns:1fr;}}
 
+
+/* TODAY'S BARS */
+.bars-wrap{margin-top:48px;}
+.bars-card{
+  position:relative;
+  border:1px solid var(--line);
+  background:var(--bg2);
+  padding:34px;
+  overflow:hidden;
+}
+.bars-card::before{
+  content:"";
+  position:absolute;
+  left:0;
+  top:0;
+  width:4px;
+  height:100%;
+  background:var(--accent);
+}
+.bars-top{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+  flex-wrap:wrap;
+}
+.bars-label{
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px;
+  color:var(--accent);
+  letter-spacing:.08em;
+  text-transform:uppercase;
+}
+.bars-date{
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px;
+  color:var(--muted);
+}
+.bars-quote{
+  margin-top:30px;
+  max-width:900px;
+  font-family:'Space Grotesk',sans-serif;
+  font-size:clamp(27px,4.5vw,54px);
+  line-height:1.03;
+  font-weight:600;
+  letter-spacing:-.025em;
+}
+.bars-quote::before{content:'“'; color:var(--accent); margin-right:8px;}
+.bars-quote::after{content:'”'; color:var(--accent); margin-left:6px;}
+.bars-artist-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:20px;
+  margin-top:28px;
+  padding-top:18px;
+  border-top:1px solid var(--line);
+}
+.bars-artist{
+  font-family:'JetBrains Mono',monospace;
+  font-size:12px;
+  color:var(--fg);
+}
+.bars-origin{
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px;
+  color:var(--muted);
+  text-align:right;
+}
+.bars-note{
+  margin-top:18px;
+  font-family:'JetBrains Mono',monospace;
+  font-size:10px;
+  color:var(--muted);
+}
+.bars-glow{
+  position:absolute;
+  width:180px;
+  height:180px;
+  right:-80px;
+  bottom:-100px;
+  border-radius:50%;
+  background:var(--accent);
+  opacity:.08;
+  filter:blur(8px);
+  pointer-events:none;
+}
+@media(max-width:600px){
+  .bars-card{padding:26px 22px;}
+  .bars-quote{margin-top:24px;}
+  .bars-artist-row{align-items:flex-start; flex-direction:column;}
+  .bars-origin{text-align:left;}
+}
+
 /* F1 */
 .f1-wrap{margin-top:48px; display:grid; grid-template-columns:1.3fr 1fr; gap:40px; align-items:center;}
 .gauge-box{border:1px solid var(--line); padding:32px; text-align:center;}
@@ -278,7 +372,7 @@ footer .flinks a:hover{color:var(--fg);}
 <a href="#home" class="logo">AS</a>
 <div class="navlinks">
 <a href="#about">About</a><a href="#experience">Experience</a><a href="#skills">Skills</a>
-<a href="#projects">Projects</a><a href="#soundtrack">Soundtrack</a><a href="#f1">F1</a>
+<a href="#projects">Projects</a><a href="#soundtrack">Soundtrack</a><a href="#bars">Bars</a><a href="#f1">F1</a>
 <a href="#resume">Resume</a><a href="#contact">Contact</a>
 </div>
 <button id="menuBtn" aria-label="Menu" aria-expanded="false">☰</button>
@@ -286,7 +380,7 @@ footer .flinks a:hover{color:var(--fg);}
 </div>
 <div id="mobileMenu">
 <a href="#about">About</a><a href="#experience">Experience</a><a href="#skills">Skills</a>
-<a href="#projects">Projects</a><a href="#soundtrack">Soundtrack</a><a href="#f1">F1</a>
+<a href="#projects">Projects</a><a href="#soundtrack">Soundtrack</a><a href="#bars">Bars</a><a href="#f1">F1</a>
 <a href="#resume">Resume</a><a href="#contact">Contact</a>
 </div>
 </header>
@@ -468,6 +562,31 @@ footer .flinks a:hover{color:var(--fg);}
 </div>
 </section>
 
+
+
+<section id="bars">
+<div class="wrap">
+<div class="kicker mono">DAILY ROTATION</div>
+<h2 class="sec-title">Today's Bars.</h2>
+<p class="sec-lead">A different line every day — global rap rotation, kept short and raw.</p>
+<div class="bars-wrap">
+<div class="bars-card">
+  <div class="bars-top">
+    <div class="bars-label" id="barIndex">BAR 01 / 20</div>
+    <div class="bars-date" id="barDate">TODAY</div>
+  </div>
+  <div class="bars-quote" id="barQuote">We gon' be alright.</div>
+  <div class="bars-artist-row">
+    <div class="bars-artist" id="barArtist">KENDRICK LAMAR</div>
+    <div class="bars-origin" id="barOrigin">COMPTON, USA · LYRIC EXCERPT</div>
+  </div>
+  <div class="bars-note">Short excerpts are shown for the daily rotation; some entries are original bars.</div>
+  <div class="bars-glow"></div>
+</div>
+</div>
+</div>
+</section>
+
 <section id="f1">
 <div class="wrap">
 <div class="kicker mono">FULL SEND.</div>
@@ -546,6 +665,51 @@ footer .flinks a:hover{color:var(--fg);}
 </footer>
 
 <script>
+
+
+/* TODAY'S BARS — changes automatically by calendar day */
+const dailyBars = [
+  {artist:"KENDRICK LAMAR", origin:"COMPTON, USA · LYRIC EXCERPT", quote:"We gon' be alright."},
+  {artist:"DRAKE", origin:"TORONTO, CANADA · LYRIC EXCERPT", quote:"Started from the bottom, now we're here."},
+  {artist:"EMINEM", origin:"DETROIT, USA · LYRIC EXCERPT", quote:"Lose yourself in the music, the moment."},
+  {artist:"JAY-Z", origin:"BROOKLYN, USA · LYRIC EXCERPT", quote:"I'm not a businessman, I'm a business, man."},
+  {artist:"NAS", origin:"QUEENS, USA · LYRIC EXCERPT", quote:"Life's a bitch and then you die."},
+  {artist:"TUPAC", origin:"WEST COAST, USA · LYRIC EXCERPT", quote:"Reality is wrong. Dreams are for real."},
+  {artist:"KANYE WEST", origin:"CHICAGO, USA · LYRIC EXCERPT", quote:"Everything I'm not makes me everything I am."},
+  {artist:"LIL WAYNE", origin:"NEW ORLEANS, USA · LYRIC EXCERPT", quote:"Real G's move in silence like lasagna."},
+  {artist:"DIVINE", origin:"MUMBAI, INDIA · LYRIC EXCERPT", quote:"Apna time aayega."},
+  {artist:"RAFTAAR", origin:"DELHI, INDIA · ORIGINAL-STYLE ROTATION", quote:"Pressure makes diamonds, I make pressure look normal."},
+  {artist:"SEEDHE MAUT", origin:"NEW DELHI, INDIA · ORIGINAL-STYLE ROTATION", quote:"No noise, just bars — let the beat catch up."},
+  {artist:"LITTLE SIMZ", origin:"LONDON, UK · ORIGINAL-STYLE ROTATION", quote:"I built this from the ground, brick by brick."},
+  {artist:"STORMZY", origin:"LONDON, UK · ORIGINAL-STYLE ROTATION", quote:"Big dreams, small circle, every move still counts."},
+  {artist:"SKEPTA", origin:"LONDON, UK · ORIGINAL-STYLE ROTATION", quote:"Keep it sharp, keep it moving, never lose the plot."},
+  {artist:"BURNA BOY", origin:"LAGOS, NIGERIA · ORIGINAL-STYLE ROTATION", quote:"Came with rhythm, left with a whole new wave."},
+  {artist:"BAD BUNNY", origin:"PUERTO RICO · ORIGINAL-STYLE ROTATION", quote:"I move different when the whole world is watching."},
+  {artist:"TRAVIS SCOTT", origin:"HOUSTON, USA · ORIGINAL-STYLE ROTATION", quote:"Night gets louder when the vision gets bigger."},
+  {artist:"J. COLE", origin:"NORTH CAROLINA, USA · ORIGINAL-STYLE ROTATION", quote:"No shortcuts, just miles nobody saw me putting in."},
+  {artist:"TYLER, THE CREATOR", origin:"LOS ANGELES, USA · ORIGINAL-STYLE ROTATION", quote:"Make your own lane, then paint the whole damn road."},
+  {artist:"ANSHU", origin:"INDIA · ORIGINAL BAR", quote:"Code in the morning, bars at night, still shipping by sunrise."}
+];
+
+function getDayOfYear(date){
+  const start=new Date(date.getFullYear(),0,0);
+  return Math.floor((date-start)/86400000);
+}
+
+function updateDailyBar(){
+  const now=new Date();
+  const index=(getDayOfYear(now)-1)%dailyBars.length;
+  const bar=dailyBars[index];
+  document.getElementById('barQuote').textContent=bar.quote;
+  document.getElementById('barArtist').textContent=bar.artist;
+  document.getElementById('barOrigin').textContent=bar.origin;
+  document.getElementById('barIndex').textContent=`BAR ${String(index+1).padStart(2,'0')} / ${String(dailyBars.length).padStart(2,'0')}`;
+  document.getElementById('barDate').textContent=now.toLocaleDateString(undefined,{weekday:'short',month:'short',day:'numeric',year:'numeric'}).toUpperCase();
+}
+
+updateDailyBar();
+setInterval(updateDailyBar,60000);
+
 const menuBtn=document.getElementById('menuBtn'), mobileMenu=document.getElementById('mobileMenu');
 menuBtn.addEventListener('click',()=>{
   const open=mobileMenu.classList.toggle('open');
